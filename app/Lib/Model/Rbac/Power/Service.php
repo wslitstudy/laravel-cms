@@ -154,7 +154,6 @@ class Service
         if ($menuId) {
             $menu = ManageMenu::where('id', $menuId)->first();
 
-
             //获取下级菜单
             if ($menu->level == 1) {
                 $parentId = $menu->id;
@@ -171,7 +170,6 @@ class Service
             }
 
             $allTwo = $this->getTwoMenus();
-
             $two = [];
 
             foreach ($allTwo as $item) {

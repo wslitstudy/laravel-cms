@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Exceptions\AdminException;
+use App\Lib\Entity\ManageMenu;
 use App\Lib\Entity\ManagePower;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -23,10 +24,16 @@ class PowerController extends Controller
             throw new AdminException('路由路径不能为空');
         }
 
+        $menu = ManageMenu::find($menuId);
+        if (!$menu) {
+            throw new AdminException('菜单不存在');
+        }
+
         $entity = new ManagePower();
         $entity->path = $path;
         $entity->method = $method;
         $entity->menu_id = $menuId;
+        $entity->level = $menu->level;
 
         if (!$entity->save()) {
             throw new AdminException('添加失败');
